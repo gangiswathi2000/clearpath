@@ -12,6 +12,8 @@ export const metadata: Metadata = {
   description: "AI-powered application to simplify government benefit matching and appeals",
 };
 
+import Navbar from "@/components/shared/Navbar";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -20,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col font-sans bg-background text-foreground">
+        <Navbar />
         {children}
       </body>
     </html>

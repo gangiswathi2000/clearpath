@@ -6,12 +6,11 @@ import { Send, ArrowLeft } from "lucide-react";
 
 export default function FindPathPage() {
   const router = useRouter();
-  const [messages, setMessages] = useState<{role: "user"|"assistant", content: string}[]>([]);
+  const [messages, setMessages] = useState<{ role: "user" | "assistant", content: string }[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // Check if there's an initial query from the landing page
     const initialQuery = sessionStorage.getItem("initialQuery");
     if (initialQuery) {
       sessionStorage.removeItem("initialQuery");
@@ -22,12 +21,11 @@ export default function FindPathPage() {
         content: "Hi! I'm your FindPath assistant. Describe your situation (income, household size, location, etc.) and I'll find programs you qualify for."
       }]);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSend = async (text: string) => {
     if (!text.trim()) return;
-    
+
     const newMessages = [...messages, { role: "user" as const, content: text }];
     setMessages(newMessages);
     setInput("");
@@ -41,11 +39,11 @@ export default function FindPathPage() {
       });
 
       const data = await res.json();
-      
+
       if (!res.ok) {
         throw new Error(data.response || "Failed to fetch from Gemini API");
       }
-      
+
       setMessages((prev) => [
         ...prev,
         { role: "assistant", content: data.response || "Sorry, I couldn't process that request." }
